@@ -1,0 +1,10 @@
+node_modules/
+.next/
+.next-dev/
+.env*
+!.env.example
+*.csv
+*.doc
+*.docx
+__pycache__/
+*.py[cod]

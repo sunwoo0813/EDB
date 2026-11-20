@@ -1,0 +1,497 @@
+<!DOCTYPE html><html lang="ko"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>서울 상권분석 — 상권 상세 분석</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <script id="tailwind-config">/** @type {import('tailwindcss').Config} */
+globalThis.tailwind = globalThis.tailwind || {};
+globalThis.tailwind.config = {
+  darkMode: 'class',
+  theme: {
+    extend: {
+      colors: {
+        'primary': '#006241',
+        'on-primary': '#ffffff',
+        'primary-accent': '#00754a',
+        'on-primary-accent': '#ffffff',
+        'house-green': '#1e3932',
+        'on-house-green': '#ffffff',
+        'green-uplift': '#2b5148',
+        'on-green-uplift': '#ffffff',
+        'green-light': '#d4e9e2',
+        'on-green-light': '#1e3932',
+        'gold': '#cba258',
+        'gold-light': '#dfc49d',
+        'gold-lightest': '#faf6ee',
+        'on-gold-lightest': '#1f1f1d',
+        'surface': '#f2f0eb',
+        'on-surface': '#1f1f1d',
+        'surface-ceramic': '#edebe9',
+        'on-surface-ceramic': '#1f1f1d',
+        'surface-card': '#ffffff',
+        'on-surface-card': '#1f1f1d',
+        'surface-cool': '#f9f9f9',
+        'on-surface-cool': '#1f1f1d',
+        'on-surface-soft': '#595957',
+        'on-dark-soft': '#cbd5d2',
+        'ink-black': '#000000',
+        'on-ink-black': '#ffffff',
+        'error': '#c82014',
+        'on-error': '#ffffff',
+        'error-tint': '#fcefed',
+        'on-error-tint': '#9b160d',
+        'warning': '#fbbc05',
+        'warning-text': '#7c4a03',
+        'border-subtle': '#d6dbde',
+        'hairline': '#e7e7e7',
+        'rewards-green': '#33433d',
+      },
+      borderRadius: {
+        'sm': '4px',
+        'DEFAULT': '12px',
+        'md': '12px',
+        'lg': '16px',
+        'pill': '50px',
+        'full': '9999px',
+      },
+      spacing: {
+        'space-1': '4px',
+        'space-2': '8px',
+        'space-3': '16px',
+        'space-4': '24px',
+        'space-5': '32px',
+        'space-6': '40px',
+        'space-7': '48px',
+        'space-8': '56px',
+        'space-9': '64px',
+      },
+      fontFamily: {
+        'display': ['"Noto Sans KR"', 'sans-serif'],
+        'headline': ['"Noto Sans KR"', 'sans-serif'],
+        'title': ['"Noto Sans KR"', 'sans-serif'],
+        'body': ['"Noto Sans KR"', 'sans-serif'],
+        'label': ['"Noto Sans KR"', 'sans-serif'],
+      },
+      fontSize: {
+        'display-lg': ['45px', { lineHeight: '54px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'display-lg-mobile': ['32px', { lineHeight: '40px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'headline-lg': ['28px', { lineHeight: '38px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'headline-md': ['24px', { lineHeight: '36px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'headline-sm': ['24px', { lineHeight: '36px', letterSpacing: '-0.16px', fontWeight: '400' }],
+        'title-lg': ['19px', { lineHeight: '28px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'body-lg': ['18px', { lineHeight: '30px', letterSpacing: '-0.16px', fontWeight: '400' }],
+        'body-md': ['16px', { lineHeight: '24px', letterSpacing: '-0.16px', fontWeight: '400' }],
+        'body-sm': ['14px', { lineHeight: '21px', letterSpacing: '-0.14px', fontWeight: '400' }],
+        'label-lg': ['16px', { lineHeight: '20px', letterSpacing: '-0.16px', fontWeight: '600' }],
+        'label-md': ['14px', { lineHeight: '20px', letterSpacing: '-0.14px', fontWeight: '600' }],
+        'label-sm': ['13px', { lineHeight: '18px', letterSpacing: '-0.1px', fontWeight: '500' }],
+      },
+      transitionDuration: {
+        'state-change': '200ms',
+        'expander': '300ms',
+      },
+      transitionDelay: {
+        'state-change': '0ms',
+        'expander': '0ms',
+      },
+      transitionTimingFunction: {
+        'state-change': 'ease',
+        'expander': 'cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+      },
+    },
+  },
+};
+if (typeof module !== 'undefined') module.exports = globalThis.tailwind.config;
+</script>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=block" rel="stylesheet">
+  <style>
+    .material-symbols-outlined, .material-symbols-rounded, .material-symbols-sharp, .material-icons {
+      display: inline-block; width: 1em; height: 1em; line-height: 1 !important;
+      box-sizing: content-box; overflow: hidden; white-space: nowrap; direction: ltr; vertical-align: middle;
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface font-body min-h-[1024px] flex flex-col" data-stitch-vh="min-h-[1024px]===min-h-screen">
+
+  <!-- Global Navigation Shell -->
+  <header class="sticky top-0 z-40 bg-surface-card shadow-[0_1px_3px_rgba(0,0,0,0.1),0_2px_2px_rgba(0,0,0,0.06),0_0_2px_rgba(0,0,0,0.07)]">
+    <div class="max-w-[1440px] mx-auto px-space-3 md:px-space-4 lg:px-space-6 h-16 md:h-[76px] lg:h-[88px] flex items-center justify-between gap-space-3">
+      <div class="flex items-center gap-space-5">
+        <a href="/" class="flex items-center gap-space-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary rounded-sm">
+          <span class="w-9 h-9 rounded-full bg-primary text-on-primary flex items-center justify-center">
+            <span class="material-symbols-outlined text-[20px]" aria-hidden="true">storefront</span>
+          </span>
+          <span class="flex flex-col">
+            <span data-design-text-token="title-lg" class="font-title text-title-lg text-primary leading-tight">서울상권 인사이트</span>
+            <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-soft hidden sm:inline">입지 의사결정 지원 서비스</span>
+          </span>
+        </a>
+
+        <nav aria-label="주요 서비스 단계" class="hidden md:flex items-center gap-space-4">
+          <a href="/" class="py-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">1. 조건 설정</a>
+          <a href="/results" class="py-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">2. 추천 결과</a>
+          <a href="/detail" aria-current="page" class="py-space-2 border-b-2 border-primary-accent text-primary font-label text-label-lg whitespace-nowrap">3. 상권 상세</a>
+          <a href="/comparison" class="py-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">4. 상권 비교</a>
+        </nav>
+      </div>
+
+      <div class="flex items-center gap-space-2">
+        <span class="hidden lg:inline-flex items-center gap-space-1 rounded-pill bg-green-light text-on-green-light px-space-3 py-1 text-label-sm font-label">
+          <span class="material-symbols-outlined text-[16px]" aria-hidden="true">schedule</span>
+          예측 대상: 2026년 3분기
+        </span>
+        <button id="mobileMenuBtn" type="button" aria-label="메뉴 열기" aria-expanded="false" class="md:hidden inline-flex items-center justify-center w-10 h-10 rounded-full border border-border-subtle text-on-surface">
+          <span class="material-symbols-outlined text-[22px]" aria-hidden="true">menu</span>
+        </button>
+      </div>
+    </div>
+
+    <div id="mobileNav" class="hidden md:hidden border-t border-hairline bg-surface-card px-space-3 py-space-3">
+      <nav aria-label="모바일 서비스 단계" class="flex flex-col gap-space-2">
+        <a href="/" class="px-space-3 py-space-2 rounded-sm text-on-surface font-label text-label-md hover:bg-surface-ceramic">1. 조건 설정</a>
+        <a href="/results" class="px-space-3 py-space-2 rounded-sm text-on-surface font-label text-label-md hover:bg-surface-ceramic">2. 추천 결과</a>
+        <a href="/detail" aria-current="page" class="px-space-3 py-space-2 rounded-sm bg-green-light text-on-green-light font-label text-label-md">3. 상권 상세</a>
+        <a href="/comparison" class="px-space-3 py-space-2 rounded-sm text-on-surface font-label text-label-md hover:bg-surface-ceramic">4. 상권 비교</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- District Header Band -->
+  <section class="bg-house-green text-on-house-green">
+    <div class="max-w-[1440px] mx-auto px-space-3 md:px-space-4 lg:px-space-6 py-space-5 flex flex-col gap-space-3">
+      <a href="/results" class="inline-flex items-center gap-1 text-label-md font-label text-on-dark-soft hover:text-on-house-green self-start">
+        <span class="material-symbols-outlined text-[18px]" aria-hidden="true">arrow_back</span>
+        추천 결과 목록으로 돌아가기
+      </a>
+
+      <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-space-3">
+        <div class="flex flex-col gap-space-2">
+          <div class="flex flex-wrap items-center gap-space-2">
+            <span id="detailDistrictBadge" class="rounded-pill bg-green-uplift text-on-green-uplift px-space-3 py-0.5 text-label-sm font-label">마포구 · 골목상권 (A)</span>
+            <span id="detailIndustryBadge" class="rounded-pill bg-green-light text-on-green-light px-space-3 py-0.5 text-label-sm font-label">선택 업종: 한식음식점</span>
+            <span class="rounded-pill border border-gold text-gold px-space-3 py-0.5 text-label-sm font-label">예시 데이터</span>
+          </div>
+          <h1 id="detailName" data-design-text-token="display-lg" class="font-display text-display-lg-mobile lg:text-display-lg text-on-house-green">
+            연남동 골목상권
+          </h1>
+          <p data-design-text-token="body-md" class="font-body text-body-md text-on-dark-soft">
+            기준 시점: <strong>2026년 2분기</strong> · 예측 대상 분기: <strong>2026년 3분기</strong> (상권 단위 분석 화면이며 개별 매물이나 점포별 수익을 의미하지 않습니다)
+          </p>
+        </div>
+
+        <div class="flex flex-wrap items-center gap-space-2">
+          <button id="togglePartialStateBtn" type="button" class="rounded-pill border border-on-house-green text-on-house-green px-space-3 py-2 text-label-sm font-label hover:bg-green-uplift active:scale-95 transition-transform duration-state-change">
+            일부 지표 미제공 상태 보기
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Main Content -->
+  <main class="flex-1 max-w-[1440px] w-full mx-auto px-space-3 md:px-space-4 lg:px-space-6 py-space-5 flex flex-col gap-space-5">
+
+    <!-- 2. 추천 근거 요약 -->
+    <section aria-labelledby="rationale-title" class="bg-surface-card rounded-md p-space-4 shadow-[0_0_0.5px_rgba(0,0,0,0.14),0_1px_1px_rgba(0,0,0,0.24)] grid grid-cols-1 lg:grid-cols-2 gap-space-4">
+      <div class="flex flex-col gap-space-2">
+        <div class="flex items-center gap-space-2">
+          <span class="material-symbols-outlined text-primary text-[22px]" aria-hidden="true">recommend</span>
+          <h2 id="rationale-title" data-design-text-token="title-lg" class="font-title text-title-lg text-primary">이 상권이 조건에 부합하는 이유 (예시)</h2>
+        </div>
+        <p id="detailReason" data-design-text-token="body-md" class="font-body text-body-md text-on-surface">
+          선택한 창업 성향(균형형)과 임대료 상한(3.3㎡당 월 15만 원 이하) 조건 안에서, 2026년 2분기 대비 다음 분기 매출과 유동인구 흐름이 완만하게 유지되는 후보 상권으로 분류되었습니다.
+        </p>
+      </div>
+      <div class="bg-gold-lightest rounded-md p-space-3 flex flex-col gap-space-2">
+        <div class="flex items-center gap-space-2">
+          <span class="material-symbols-outlined text-warning-text text-[22px]" aria-hidden="true">warning</span>
+          <h3 data-design-text-token="title-lg" class="font-title text-title-lg text-warning-text">함께 살펴봐야 할 주의점</h3>
+        </div>
+        <p id="detailCaution" data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface">
+          동일 업종 점포 수(48개)가 적은 편이 아니며, 환산임대료는 지역 평균 기반 참고치이므로 실제 골목 위치·층수·권리금 조건은 현장 방문을 통해 반드시 확인해야 합니다.
+        </p>
+      </div>
+    </section>
+
+    <!-- 3. 핵심 지표 4개 -->
+    <section aria-labelledby="metrics-title" class="flex flex-col gap-space-3">
+      <div class="flex flex-wrap items-center justify-between gap-space-2">
+        <h2 id="metrics-title" data-design-text-token="headline-md" class="font-headline text-headline-md text-primary">핵심 지표 요약 (2026년 2분기 기준 → 3분기 예측)</h2>
+        <span data-design-text-token="label-sm" class="font-label text-label-sm text-on-surface-soft">예측 단위를 혼동하지 않도록 업종 단위와 상권 전체 단위를 구분해 표시합니다.</span>
+      </div>
+
+      <div id="metricCardsGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-space-3 items-stretch"></div>
+    </section>
+
+    <!-- 4. 과거 변화와 다음 분기 예측 (Interactive Tabs + SVG Chart) -->
+    <section aria-labelledby="chart-title" class="bg-surface-card rounded-md p-space-4 shadow-[0_0_0.5px_rgba(0,0,0,0.14),0_1px_1px_rgba(0,0,0,0.24)] flex flex-col gap-space-4">
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-space-2">
+        <div>
+          <h2 id="chart-title" data-design-text-token="headline-md" class="font-headline text-headline-md text-primary">과거 변화와 다음 분기 예측</h2>
+          <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-soft">실선(2025년 2분기~2026년 2분기)은 제공된 과거 데이터, 점선(2026년 3분기)은 모델 예측값 예시입니다.</p>
+        </div>
+        <div class="flex items-center gap-space-3 text-label-sm font-label">
+          <span class="inline-flex items-center gap-1"><span class="w-4 h-0.5 bg-primary inline-block"></span> 과거 실적·추정</span>
+          <span class="inline-flex items-center gap-1"><span class="w-4 h-0.5 border-t-2 border-dashed border-gold inline-block"></span> 2026년 3분기 예측</span>
+        </div>
+      </div>
+
+      <!-- COMPONENT: tabs-horizontal -->
+      <div data-component-id="tabs-horizontal" data-component-type="tabs" data-component-variant="horizontal" class="w-full">
+        <div role="tablist" aria-label="지표 추이 선택" class="flex items-center gap-space-4 border-b border-hairline overflow-x-auto">
+          <button role="tab" type="button" data-chart-tab="sales" aria-selected="true" class="chart-tab-btn pb-space-2 border-b-2 border-primary-accent text-primary font-label text-label-lg whitespace-nowrap">추정 월매출액</button>
+          <button role="tab" type="button" data-chart-tab="stores" aria-selected="false" class="chart-tab-btn pb-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">전체 점포 수</button>
+          <button role="tab" type="button" data-chart-tab="traffic" aria-selected="false" class="chart-tab-btn pb-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">총 유동인구</button>
+          <button role="tab" type="button" data-chart-tab="rent" aria-selected="false" class="chart-tab-btn pb-space-2 border-b-2 border-transparent text-on-surface-soft hover:text-on-surface font-label text-label-lg whitespace-nowrap">환산임대료</button>
+        </div>
+
+        <div id="chartContainer" class="pt-space-4">
+          <div id="chartMeta" class="flex flex-wrap items-center justify-between gap-space-2 mb-space-3">
+            <span id="chartUnitBadge" class="rounded-pill bg-surface-cool px-space-3 py-1 text-label-sm font-label text-on-surface-soft">단위: 원 (상권 × 선택 업종)</span>
+            <span id="chartRangeNote" class="text-label-sm font-label text-on-surface-soft">제공된 이력만 표시 (임의 보간 없음)</span>
+          </div>
+          <div id="svgChartBox" class="w-full overflow-x-auto"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. 상권 이해를 위한 추가 정보 -->
+    <section aria-labelledby="extra-title" class="bg-surface-card rounded-md p-space-4 shadow-[0_0_0.5px_rgba(0,0,0,0.14),0_1px_1px_rgba(0,0,0,0.24)] flex flex-col gap-space-4">
+      <div class="flex flex-col gap-1 border-b border-hairline pb-space-3">
+        <h2 id="extra-title" data-design-text-token="headline-md" class="font-headline text-headline-md text-primary">상권 이해를 위한 추가 정보 (예시 데이터)</h2>
+        <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-surface-soft">데이터가 제공되는 경우에만 표시되며, 선택한 업종 기준 정보와 상권 전체 기준 정보를 구분해 안내합니다.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-space-4">
+        <div class="bg-surface-cool rounded-sm p-space-3 flex flex-col gap-space-2">
+          <span class="self-start rounded-pill bg-green-light text-on-green-light px-2.5 py-0.5 text-label-sm font-label">선택 업종 단위 (한식음식점)</span>
+          <dl class="divide-y divide-hairline text-body-sm">
+            <div class="py-2 flex justify-between"><dt class="text-on-surface-soft">개업 점포 수 (2026년 2분기)</dt><dd class="font-semibold tabular-nums">예시 · 3개</dd></div>
+            <div class="py-2 flex justify-between"><dt class="text-on-surface-soft">폐업 점포 수 (2026년 2분기)</dt><dd class="font-semibold tabular-nums">예시 · 1개</dd></div>
+          </dl>
+        </div>
+        <div class="bg-surface-cool rounded-sm p-space-3 flex flex-col gap-space-2">
+          <span class="self-start rounded-pill bg-surface-ceramic text-on-surface px-2.5 py-0.5 text-label-sm font-label">상권 전체 단위</span>
+          <dl class="divide-y divide-hairline text-body-sm">
+            <div class="py-2 flex justify-between"><dt class="text-on-surface-soft">상주인구 (2026년 2분기)</dt><dd class="font-semibold tabular-nums">예시 · 4,820명</dd></div>
+            <div class="py-2 flex justify-between"><dt class="text-on-surface-soft">직장인구 (2026년 2분기)</dt><dd class="font-semibold tabular-nums">예시 · 3,190명</dd></div>
+            <div class="py-2 flex justify-between"><dt class="text-on-surface-soft">주요 집객시설</dt><dd class="font-semibold">지하철역(홍대입구역), 공원, 소규모 숙박·문화시설</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- 6. 하단 행동 -->
+    <section class="flex flex-wrap items-center justify-between gap-space-3 pt-space-2">
+      <div class="flex flex-wrap items-center gap-space-2">
+        <a href="/comparison" class="rounded-pill bg-primary-accent text-on-primary-accent px-space-4 py-2.5 text-label-lg font-label hover:bg-primary active:scale-95 transition-transform duration-state-change">다른 상권과 비교하기</a>
+        <a href="/results" class="rounded-pill border border-primary-accent text-primary-accent px-space-4 py-2.5 text-label-lg font-label hover:bg-green-light/40 active:scale-95 transition-transform duration-state-change">추천 결과 목록으로 돌아가기</a>
+      </div>
+      <a href="/" class="rounded-pill border border-border-subtle text-on-surface px-space-4 py-2.5 text-label-md font-label hover:bg-surface-ceramic active:scale-95 transition-transform duration-state-change">조건 수정하기</a>
+    </section>
+  </main>
+
+  <!-- House Green Footer -->
+  <footer class="bg-house-green text-on-house-green mt-space-7">
+    <div class="max-w-[1440px] mx-auto px-space-3 md:px-space-4 lg:px-space-6 py-space-5 flex flex-col md:flex-row items-start md:items-center justify-between gap-space-3">
+      <div class="flex flex-col gap-1">
+        <span data-design-text-token="title-lg" class="font-title text-title-lg text-on-house-green">서울상권 인사이트</span>
+        <p data-design-text-token="body-sm" class="font-body text-body-sm text-on-dark-soft">
+          데이터 출처: 서울 열린데이터광장, 한국부동산원 · 기준 시점: 2026년 2분기 · 예측 대상: 2026년 3분기
+        </p>
+      </div>
+      <p data-design-text-token="label-sm" class="font-label text-label-sm text-on-dark-soft max-w-md">
+        예측 결과는 실제 결과와 달라질 수 있으며, 최종 결정 전 반드시 현장 확인이 필요합니다.
+      </p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      let partialMissing = false;
+      let activeChart = "sales";
+
+      const METRICS = [
+        {
+          key: "sales",
+          title: "추정 월매출액",
+          scope: "상권 × 선택 업종",
+          q2: "11억 8,000만 원",
+          q3: "12억 4,000만 원",
+          change: "+6,000만 원 (+5.1%)",
+          desc: "상권 내 선택 업종 전체의 월매출 규모이며, 개별 점포 한 곳의 예상 수익이 아닙니다."
+        },
+        {
+          key: "stores",
+          title: "전체 점포 수",
+          scope: "상권 × 선택 업종",
+          q2: "46개",
+          q3: "48개",
+          change: "+2개 (+4.3%)",
+          desc: "경쟁 환경을 살펴보는 참고 지표이며, 점포 수만으로 경쟁 강도를 단정하지 않습니다."
+        },
+        {
+          key: "traffic",
+          title: "총 유동인구",
+          scope: "상권 전체",
+          q2: "179,500명",
+          q3: "184,200명",
+          change: "+4,700명 (+2.6%)",
+          desc: "상권 전체 유동 규모이며, 선택한 업종의 실제 고객 수나 방문자 수를 의미하지 않습니다."
+        },
+        {
+          key: "rent",
+          title: "환산임대료",
+          scope: "상권 연결 지역 참고",
+          q2: "139,000원 / 3.3㎡ / 월",
+          q3: "142,000원 / 3.3㎡ / 월",
+          change: "+3,000원 (+2.2%)",
+          desc: "지역 임대료 자료를 상권에 연결한 참고치로 실제 개별 점포 월세·보증금과 다를 수 있습니다."
+        }
+      ];
+
+      const CHARTS = {
+        sales: {
+          unit: "단위: 억 원 (상권 × 선택 업종 · 예시 데이터)",
+          quarters: ["2025 2Q", "2025 3Q", "2025 4Q", "2026 1Q", "2026 2Q (기준)", "2026 3Q (예측)"],
+          values: [10.8, 11.1, 11.4, 11.5, 11.8, 12.4],
+          suffix: "억"
+        },
+        stores: {
+          unit: "단위: 개 (상권 × 선택 업종 · 예시 데이터)",
+          quarters: ["2025 2Q", "2025 3Q", "2025 4Q", "2026 1Q", "2026 2Q (기준)", "2026 3Q (예측)"],
+          values: [43, 44, 45, 45, 46, 48],
+          suffix: "개"
+        },
+        traffic: {
+          unit: "단위: 천 명 (상권 전체 · 예시 데이터)",
+          quarters: ["2025 2Q", "2025 3Q", "2025 4Q", "2026 1Q", "2026 2Q (기준)", "2026 3Q (예측)"],
+          values: [171, 174, 177, 176, 179.5, 184.2],
+          suffix: "천명"
+        },
+        rent: {
+          unit: "단위: 천 원 / 3.3㎡ / 월 (예시 데이터)",
+          quarters: ["2025 2Q", "2025 3Q", "2025 4Q", "2026 1Q", "2026 2Q (기준)", "2026 3Q (예측)"],
+          values: [132, 134, 136, 137, 139, 142],
+          suffix: "천원"
+        }
+      };
+
+      function renderMetricCards() {
+        const grid = document.getElementById("metricCardsGrid");
+        grid.innerHTML = "";
+        METRICS.forEach(m => {
+          const missing = partialMissing && m.key === "rent";
+          const card = document.createElement("article");
+          card.className = "bg-surface-card rounded-md p-space-4 shadow-[0_0_0.5px_rgba(0,0,0,0.14),0_1px_1px_rgba(0,0,0,0.24)] flex flex-col justify-between gap-space-2";
+          if (missing) {
+            card.innerHTML = `
+              <div class="flex flex-col gap-space-2">
+                <div class="flex items-center justify-between">
+                  <span class="text-label-md font-label text-primary">${m.title}</span>
+                  <span class="rounded-pill bg-surface-ceramic px-2 py-0.5 text-label-sm font-label text-on-surface-soft">${m.scope}</span>
+                </div>
+                <div class="bg-surface-cool rounded-sm p-space-3 text-center flex flex-col gap-1">
+                  <span class="material-symbols-outlined text-on-surface-soft text-[24px]" aria-hidden="true">help</span>
+                  <span class="text-label-md font-label text-on-surface">해당 분기 지표 미제공</span>
+                  <span class="text-body-sm text-on-surface-soft">임의로 추정하거나 보간하지 않습니다.</span>
+                </div>
+              </div>
+              <p class="text-label-sm text-on-surface-soft">${m.desc}</p>
+            `;
+          } else {
+            card.innerHTML = `
+              <div class="flex flex-col gap-space-2">
+                <div class="flex items-center justify-between gap-1">
+                  <span class="text-label-md font-label text-primary">${m.title}</span>
+                  <span class="rounded-pill bg-green-light text-on-green-light px-2 py-0.5 text-label-sm font-label">${m.scope}</span>
+                </div>
+                <div class="flex flex-col gap-1 pt-1">
+                  <span class="text-label-sm text-on-surface-soft">2026년 3분기 예측 (예시)</span>
+                  <span class="text-headline-md font-headline text-on-surface tabular-nums">${m.q3}</span>
+                </div>
+                <div class="flex flex-col gap-0.5 text-body-sm bg-surface-cool rounded-sm p-space-2 tabular-nums">
+                  <div class="flex justify-between"><span class="text-on-surface-soft">2026년 2분기 기준</span><span class="font-semibold">${m.q2}</span></div>
+                  <div class="flex justify-between"><span class="text-on-surface-soft">이전 분기 대비</span><span class="font-semibold text-primary-accent">${m.change}</span></div>
+                </div>
+              </div>
+              <p class="text-label-sm text-on-surface-soft pt-1 border-t border-hairline">${m.desc}</p>
+            `;
+          }
+          grid.appendChild(card);
+        });
+      }
+
+      function renderChart(key) {
+        const data = CHARTS[key];
+        document.getElementById("chartUnitBadge").textContent = data.unit;
+        const box = document.getElementById("svgChartBox");
+
+        if (partialMissing && key === "rent") {
+          box.innerHTML = `<div class="bg-surface-cool rounded-sm p-space-6 text-center text-body-md text-on-surface-soft">환산임대료 예측 이력이 제공되지 않아 차트를 표시할 수 없습니다.</div>`;
+          return;
+        }
+
+        const w = 720, h = 240, padX = 56, padY = 36;
+        const minV = Math.min(...data.values) * 0.92;
+        const maxV = Math.max(...data.values) * 1.06;
+        const stepX = (w - padX * 2) / (data.values.length - 1);
+
+        const pts = data.values.map((v, i) => {
+          const x = padX + i * stepX;
+          const y = h - padY - ((v - minV) / (maxV - minV)) * (h - padY * 2);
+          return { x, y, v, label: data.quarters[i] };
+        });
+
+        const histPath = pts.slice(0, 5).map((p, i) => `${i === 0 ? "M" : "L"}${p.x.toFixed(1)},${p.y.toFixed(1)}`).join(" ");
+        const predPath = `M${pts[4].x.toFixed(1)},${pts[4].y.toFixed(1)} L${pts[5].x.toFixed(1)},${pts[5].y.toFixed(1)}`;
+
+        box.innerHTML = `
+          <svg viewBox="0 0 ${w} ${h}" class="w-full min-w-[560px] h-auto" role="img" aria-label="${key} 분기별 추이 및 2026년 3분기 예측 차트">
+            <line x1="${padX}" y1="${h - padY}" x2="${w - padX}" y2="${h - padY}" stroke="#e7e7e7" stroke-width="1" />
+            <rect x="${pts[5].x - 36}" y="12" width="72" height="${h - padY - 12}" rx="6" fill="#faf6ee" />
+            <path d="${histPath}" fill="none" stroke="#006241" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" />
+            <path d="${predPath}" fill="none" stroke="#cba258" stroke-width="3" stroke-dasharray="6 5" stroke-linecap="round" />
+            ${pts.map((p, i) => `
+              <circle cx="${p.x.toFixed(1)}" cy="${p.y.toFixed(1)}" r="${i === 5 ? 6 : 4.5}" fill="${i === 5 ? "#cba258" : "#00754a"}" stroke="#ffffff" stroke-width="2" />
+              <text x="${p.x.toFixed(1)}" y="${(p.y - 12).toFixed(1)}" text-anchor="middle" font-size="12" font-weight="600" fill="#1f1f1d">${p.v}${data.suffix}</text>
+              <text x="${p.x.toFixed(1)}" y="${h - 12}" text-anchor="middle" font-size="11" fill="${i === 5 ? "#7c4a03" : "#595957"}">${p.label}</text>
+            `).join("")}
+          </svg>
+        `;
+      }
+
+      document.querySelectorAll(".chart-tab-btn").forEach(btn => {
+        btn.addEventListener("click", () => {
+          activeChart = btn.dataset.chartTab;
+          document.querySelectorAll(".chart-tab-btn").forEach(b => {
+            const active = b.dataset.chartTab === activeChart;
+            b.setAttribute("aria-selected", String(active));
+            b.className = "chart-tab-btn pb-space-2 border-b-2 font-label text-label-lg whitespace-nowrap " + (active ? "border-primary-accent text-primary" : "border-transparent text-on-surface-soft hover:text-on-surface");
+          });
+          renderChart(activeChart);
+        });
+      });
+
+      document.getElementById("togglePartialStateBtn").addEventListener("click", function () {
+        partialMissing = !partialMissing;
+        this.textContent = partialMissing ? "정상 데이터 상태로 복원" : "일부 지표 미제공 상태 보기";
+        renderMetricCards();
+        renderChart(activeChart);
+      });
+
+      document.getElementById("mobileMenuBtn").addEventListener("click", function () {
+        const nav = document.getElementById("mobileNav");
+        const expanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", String(!expanded));
+        nav.classList.toggle("hidden");
+      });
+
+      renderMetricCards();
+      renderChart(activeChart);
+    })();
+  </script>
+
+
+</body></html>
